@@ -42,7 +42,7 @@ function App() {
     <div className="App">
       <h2>Todo List</h2>
       <TodoForm addTodo={addTodo} />
-      <Todos todos={todos}/>
+      {/* <Todos todos={todos}/> */}
     </div>
   );
 }

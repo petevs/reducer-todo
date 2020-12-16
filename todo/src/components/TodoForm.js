@@ -1,26 +1,24 @@
-import React, {useState, useEffect, useReducer} from 'react'
-import todoReducer from '../reducers/todoReducer'
+import React, {useState, useReducer} from 'react'
+import {todoReducer, initialState} from '../reducers/todoReducer'
+import Todos from './Todos'
 
 export default function TodoForm(props) {
 
     const {addTodo} = props
 
     const [newTodo, setNewTodo] = useState('')
-    const [state, dispatch] = useReducer(todoReducer, '')
+    const [state, dispatch] = useReducer(todoReducer, initialState)
     
     const handleChanges = (e) => {
         setNewTodo(e.target.value)
     }
 
-    useEffect(() => {
-        console.log(newTodo)
-    },[newTodo])
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        addTodo(e, newTodo)
+        // addTodo(e, newTodo)
         setNewTodo('')
     }
+
 
     return (
         <div>
@@ -35,8 +33,9 @@ export default function TodoForm(props) {
                     value={newTodo} 
                     placeholder='Enter todo' 
                 />
-                <button onClick={() => dispatch({type: 'ADD_TODO', payload: {newTodo}})}>Add Todo</button>
+                <button onClick={() => dispatch({type: 'ADD_TODO', payload: newTodo})}>Add Todo</button>
             </form>
+            <Todos todos={state}/>
         </div>
     )
 }
