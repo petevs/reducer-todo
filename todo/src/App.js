@@ -24,10 +24,24 @@ function App() {
     setTodos(todoList)
   },[])
 
+
+  const addTodo = (e, item) => {
+    e.preventDefault();
+    const newTodo = {
+      task: item,
+      id: Date.now(),
+      completed: false
+    }
+    setTodos([
+        ...todos,
+        newTodo
+      ])
+  }
+
   return (
     <div className="App">
       <h2>Todo List</h2>
-      <TodoForm />
+      <TodoForm addTodo={addTodo} />
       <Todos todos={todos}/>
     </div>
   );
