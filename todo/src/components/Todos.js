@@ -1,9 +1,21 @@
 import React from 'react'
 
-export default function Todos() {
+export default function Todos(props) {
+
+    const {todos} = props
+
+    console.log(props)
+
+    const todoList = todos.map(todo => {
+        return (
+            <h3>{todo.task}</h3>
+        )
+    })
+
+
     return (
         <div>
-            <h2>Todo List will go here</h2>
+            {todoList}
         </div>
     )
 }
