@@ -1,10 +1,7 @@
 import React, {useState, useReducer} from 'react'
 import {todoReducer, initialState} from '../reducers/todoReducer'
-import Todos from './Todos'
 
-export default function TodoForm(props) {
-
-    const {addTodo} = props
+export default function TodoForm() {
 
     const [newTodo, setNewTodo] = useState('')
     const [state, dispatch] = useReducer(todoReducer, initialState)
@@ -15,10 +12,14 @@ export default function TodoForm(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // addTodo(e, newTodo)
         setNewTodo('')
     }
 
+    const completed = (item) => {
+        if(item) {
+            return 'completed'
+        }
+    }
 
     return (
         <div>
@@ -35,7 +36,22 @@ export default function TodoForm(props) {
                 />
                 <button onClick={() => dispatch({type: 'ADD_TODO', payload: newTodo})}>Add Todo</button>
             </form>
-            <Todos todos={state}/>
+
+            {state.map(item => {
+
+                    return (
+                        <h3 
+                            key={item.id}
+                            className={completed(item.completed)} 
+                            onClick={() => dispatch({type: 'TOGGLE_EDITING', payload: item.id})}
+                        >
+                            {item.task}
+                        </h3>
+                        )
+                }
+            )}
+
+            <button onClick={() => dispatch({type: 'CLEAR_COMPLETED',})}>Clear Completed Todos</button>
         </div>
     )
 }

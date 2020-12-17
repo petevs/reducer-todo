@@ -11,30 +11,29 @@ export const initialState = [
     }
   ];
 
-
-// const addTodo = (e, item) => {
-// e.preventDefault();
-// const newTodo = {
-//     task: item,
-//     id: Date.now(),
-//     completed: false
-// }
-// setTodos([
-//     ...todos,
-//     newTodo
-//     ])
-// }
-
-
 export const todoReducer = (state, action) => {
 
     switch(action.type) {
         case('ADD_TODO'):
-            console.log([...state, {task: action.payload}])
             return [...state,
-                 {task: action.payload,
-                id: Date.now(),
-            completed: false}]
+                {
+                    task: action.payload,
+                    id: Date.now(),
+                    completed: false
+                }]
+        case('TOGGLE_EDITING'):
+            return state.map(item => {
+                if(item.id === action.payload) {
+                    return {
+                        ...item,
+                        completed: !item.completed
+                    }
+                } else {
+                    return item
+                }
+            })
+        case('CLEAR_COMPLETED'):
+            return state.filter(item => !item.completed)
         default:
             return state
     }
